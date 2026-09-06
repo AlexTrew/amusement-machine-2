@@ -1,0 +1,57 @@
+# values.yaml
+replicaCount: 1
+
+image:
+  pullPolicy: IfNotPresent
+
+persistence:
+  config:
+    enabled: true
+    size: 50Gi
+    storageClass: "longhorn"
+  media:
+    enabled: true
+    size: 500Gi
+    storageClass: "media-persistent"
+
+# values.yaml
+replicaCount: 1
+
+image:
+  pullPolicy: IfNotPresent
+
+persistence:
+  config:
+    enabled: true
+    size: 5Gi
+    storageClass: ""
+  media:
+    enabled: true
+    size: 100Gi
+    storageClass: ""
+
+httpRoute:
+  enabled: true
+  annotations: {}
+  parentRefs:
+    - name: my-gateway
+      namespace: gateway-system
+      sectionName: http
+  hostnames:
+    - amusement-zone
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+resources:
+  limits:
+    cpu: 2000m
+    memory: 4Gi
+  requests:
+    cpu: 500m
+    memory: 1Gi
+
+nodeSelector: {}
+tolerations: []
+affinity: {}

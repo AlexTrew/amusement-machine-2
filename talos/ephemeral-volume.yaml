@@ -1,0 +1,7 @@
+# limit the size of the EPHEMERAL volume
+apiVersion: v1alpha1
+kind: VolumeConfig
+name: EPHEMERAL
+provisioning:
+  maxSize: 40GiB
+  grow: true

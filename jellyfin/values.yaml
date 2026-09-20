@@ -9,41 +9,32 @@ persistence:
     enabled: true
     size: 50Gi
     storageClass: "longhorn"
+    replicaCount: 1
   media:
     enabled: true
     size: 500Gi
-    storageClass: "media-persistent"
-
-# values.yaml
-replicaCount: 1
+    existingClaim: nfs-media-pvc
 
 image:
   pullPolicy: IfNotPresent
-
-persistence:
-  config:
-    enabled: true
-    size: 5Gi
-    storageClass: ""
-  media:
-    enabled: true
-    size: 100Gi
-    storageClass: ""
 
 httpRoute:
   enabled: true
   annotations: {}
   parentRefs:
-    - name: my-gateway
-      namespace: gateway-system
-      sectionName: http
+    - name: envoy-internal
+      namespace: network
   hostnames:
-    - amusement-zone
+    - amusement-zone.house
   rules:
     - matches:
         - path:
             type: PathPrefix
             value: /
+      backendRefs:
+        - name: jellyfin
+          port: 8096
+
 resources:
   limits:
     cpu: 2000m

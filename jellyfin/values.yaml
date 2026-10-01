@@ -7,12 +7,12 @@ image:
 persistence:
   config:
     enabled: true
-    size: 50Gi
+    size: 10Gi
     storageClass: "longhorn"
     replicaCount: 1
   media:
     enabled: true
-    size: 500Gi
+    size: 650Gi
     existingClaim: nfs-media-pvc
 
 image:

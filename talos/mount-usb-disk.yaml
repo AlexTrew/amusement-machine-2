@@ -1,0 +1,8 @@
+# existing-volume.patch.yaml
+apiVersion: v1alpha1
+kind: UserVolumeConfig
+name: usb-hdd
+provisioning:
+  diskSelector:
+    match: disk.transport == "usb"
+  maxSize: 500GiB

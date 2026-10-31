@@ -5,4 +5,4 @@ name: usb-hdd
 provisioning:
   diskSelector:
     match: disk.transport == "usb"
-  maxSize: 500GiB
+  maxSize: 1000GiB

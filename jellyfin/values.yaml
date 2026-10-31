@@ -12,11 +12,12 @@ persistence:
     replicaCount: 1
   media:
     enabled: true
-    size: 650Gi
-    existingClaim: nfs-media-pvc
+    existingClaim: "jellyfin-media"
+    storageClass: "longhorn-rwx"
 
-image:
-  pullPolicy: IfNotPresent
+podSecurityContext:
+  fsGroup: 1000
+  fsGroupChangePolicy: OnRootMismatch
 
 httpRoute:
   enabled: true

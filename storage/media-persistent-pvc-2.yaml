@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: nfs-media-pvc
+  name: nfs-media-pvc-2
 spec:
   accessModes:
     - ReadWriteMany
   storageClassName: longhorn-rwx
   resources:
     requests:
-      storage: 600Gi
+      storage: 1000Gi

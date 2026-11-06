@@ -40,6 +40,8 @@ spec:
           volumeMounts:
             - name: jellyfin-media
               mountPath: /data/jellyfin-media
+            - name: state
+              mountPath: /app/data/state
           readinessProbe:
             httpGet:
               path: /

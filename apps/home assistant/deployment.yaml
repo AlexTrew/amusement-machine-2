@@ -42,14 +42,14 @@ spec:
           volumeMounts:
             - name: state
               mountPath: /config
-            - name: state
+            - name: env
               mountPath: /config/configuration.yaml
 
       volumes:
         - name: state
           persistentVolumeClaim:
             claimName: home-assistant-state
-        - name: config
+        - name: env
           configMap:
             name: home-assistant-config
 ---

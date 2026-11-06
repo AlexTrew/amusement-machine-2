@@ -48,7 +48,7 @@ spec:
             claimName: home-assistant-state
         - name: config
           configMap:
-            claimName: home-assistant-config
+            name: home-assistant-config
 ---
 apiVersion: v1
 kind: Service

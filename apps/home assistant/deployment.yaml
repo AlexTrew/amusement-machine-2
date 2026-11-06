@@ -44,6 +44,7 @@ spec:
               mountPath: /config
             - name: env
               mountPath: /config/configuration.yaml
+              subPath: configuration.yaml
 
       volumes:
         - name: state

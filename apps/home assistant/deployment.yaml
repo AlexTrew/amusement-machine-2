@@ -47,7 +47,7 @@ spec:
           persistentVolumeClaim:
             claimName: home-assistant-state
         - name: config
-          ConfigMap:
+          configMap:
             claimName: home-assistant-config
 ---
 apiVersion: v1

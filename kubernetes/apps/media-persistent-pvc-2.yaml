@@ -3,6 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: nfs-media-pvc-2
 spec:
+  namespace: default
   accessModes:
     - ReadWriteMany
   storageClassName: longhorn-rwx

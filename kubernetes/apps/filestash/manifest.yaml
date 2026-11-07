@@ -36,7 +36,7 @@ spec:
             - containerPort: 8334
           env:
             - name: APPLICATION_URL
-              value: "files.amusement-zone.house"
+              value: "files.thistly-nook"
           volumeMounts:
             - name: jellyfin-media
               mountPath: /data/jellyfin-media
@@ -81,7 +81,7 @@ spec:
     - name: envoy-internal
       namespace: network
   hostnames:
-    - files.amusement-zone.house
+    - files.thistly-nook
   rules:
     - matches:
         - path:

@@ -42,17 +42,11 @@ spec:
           volumeMounts:
             - name: state
               mountPath: /config
-            - name: env
-              mountPath: /config/configuration.yaml
-              subPath: configuration.yaml
 
       volumes:
         - name: state
           persistentVolumeClaim:
             claimName: home-assistant-state
-        - name: env
-          configMap:
-            name: home-assistant-config
 ---
 apiVersion: v1
 kind: Service

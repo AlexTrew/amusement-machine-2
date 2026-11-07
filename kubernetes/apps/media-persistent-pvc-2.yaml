@@ -2,8 +2,8 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: nfs-media-pvc-2
-spec:
   namespace: default
+spec:
   accessModes:
     - ReadWriteMany
   storageClassName: longhorn-rwx

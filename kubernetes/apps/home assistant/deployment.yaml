@@ -70,7 +70,7 @@ spec:
     - name: envoy-internal
       namespace: network
   hostnames:
-    - admin.thistly-nook.house
+    - home.thistly-nook
   rules:
     - matches:
         - path:

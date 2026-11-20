@@ -27,9 +27,6 @@ spec:
       labels:
         app: home-assistant
     spec:
-      securityContext:
-        fsGroup: 2000
-        privileged: true
       containers:
         - name: home-assistant
           image: ghcr.io/home-assistant/home-assistant:stable
@@ -40,6 +37,8 @@ spec:
               memory: 512Mi
             limits:
               memory: 2Gi
+          securityContext:
+            privileged: true
           volumeMounts:
             - name: state
               mountPath: /config

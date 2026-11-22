@@ -42,16 +42,10 @@ spec:
           volumeMounts:
             - name: state
               mountPath: /config
-            - name: zigbee
-              mountPath: /dev/ttyUSB0
-
       volumes:
         - name: state
           persistentVolumeClaim:
             claimName: home-assistant-state
-        - name: zigbee
-          hostPath:
-            path: /dev/ttyUSB0
 
 ---
 apiVersion: v1

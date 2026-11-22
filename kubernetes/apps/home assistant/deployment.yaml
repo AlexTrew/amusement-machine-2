@@ -85,3 +85,5 @@ spec:
       backendRefs:
         - name: home-assistant
           port: 80
+---
+# border router

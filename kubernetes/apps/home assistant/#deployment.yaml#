@@ -27,8 +27,8 @@ spec:
       labels:
         app: home-assistant
     spec:
-      securityContext:
-        fsGroup: 2000
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: home-assistant
           image: ghcr.io/home-assistant/home-assistant:stable
@@ -42,17 +42,11 @@ spec:
           volumeMounts:
             - name: state
               mountPath: /config
-            - name: usb
-              mountPath: /dev/ttyUSB0
-
       volumes:
         - name: state
           persistentVolumeClaim:
             claimName: home-assistant-state
-        - name: usb
-          path: /dev/ttyUSB0
-          
-          
+
 ---
 apiVersion: v1
 kind: Service
@@ -85,3 +79,4 @@ spec:
       backendRefs:
         - name: home-assistant
           port: 80
+---

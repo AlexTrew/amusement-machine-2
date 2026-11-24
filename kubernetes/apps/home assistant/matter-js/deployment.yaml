@@ -1,0 +1,96 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: js-matter-data
+  namespace: default
+spec:
+  accessModes: ["ReadWriteOnce"]
+  resources:
+    requests:
+      storage: 100Mi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: js-matter
+  namespace: default
+  labels:
+    app: js-matter
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate # only one pod may own the radio and host ports
+  selector:
+    matchLabels:
+      app: js-matter
+  template:
+    metadata:
+      labels:
+        app: js-matter
+    spec:
+      hostNetwork: true # needed for IPv6 RAs and mDNS on the LAN
+      dnsPolicy: ClusterFirstWithHostNet
+      containers:
+        - name: js-matter
+          image: ghcr.io/matter-js/matterjs-server:stable
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            privileged: true # radio access, ip6tables, sysctls
+          args:
+            - --production-mode
+          env:
+            - name: PRIMARY_INTERFACE
+              value: "bond0"
+          volumeMounts:
+            - name: data
+              mountPath: /data/js-matter # Thread dataset/credentials survive restarts
+          # readinessProbe:
+          #   httpGet:
+          #     path: /node
+          #     port: 5580
+          #   initialDelaySeconds: 15
+          #   periodSeconds: 20
+          # livenessProbe:
+          #   httpGet:
+          #     path: /node
+          #     port: 5580
+          #   initialDelaySeconds: 60
+          #   periodSeconds: 30
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: js-matter-data
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: js-matter
+  namespace: default
+spec:
+  type: ClusterIP
+  selector:
+    app: js-matter
+  ports:
+    - name: rest
+      port: 5580
+      targetPort: 5580
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: js-matter
+  namespace: default
+spec:
+  parentRefs:
+    - name: envoy-internal
+      namespace: network
+  hostnames:
+    - matter.thistly-nook
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: js-matter
+          port: 5580

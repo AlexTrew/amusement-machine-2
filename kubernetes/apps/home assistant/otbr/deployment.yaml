@@ -73,8 +73,7 @@ spec:
       volumes:
         - name: sonoff-dongle
           hostPath:
-            # stable path; find yours with: ls -l /dev/serial/by-id/
-            path: /dev/ttyUSB0
+            path: /dev/serial/by-id/usb-SONOFF_SONOFF_Dongle_Lite_MG21_9e5cd16fb7a2ef11aaaf926661ce3355-if00-port
         - name: data
           persistentVolumeClaim:
             claimName: otbr-data

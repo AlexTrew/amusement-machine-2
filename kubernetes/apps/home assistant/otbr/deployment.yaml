@@ -56,7 +56,7 @@ spec:
           volumeMounts:
             - name: sonoff-dongle
               mountPath: /dev/ttyUSB0
-            - name: data
+            - name: otbr-data
               mountPath: /data/thread # Thread dataset/credentials survive restarts
           readinessProbe:
             httpGet:
@@ -73,10 +73,11 @@ spec:
       volumes:
         - name: sonoff-dongle
           hostPath:
-            path: /dev/serial/by-id/usb-SONOFF_SONOFF_Dongle_Lite_MG21_9e5cd16fb7a2ef11aaaf926661ce3355-if00-port
-        - name: data
+            path: /dev/serial/by-id/usb-SONOFF_SONOFF_Dongle_Lite_MG21_9e5cd16fb7a2ef11aaaf926661ce3355-if00-port0
+        - name: otbr-data
           persistentVolumeClaim:
             claimName: otbr-data
+
 ---
 apiVersion: v1
 kind: Service

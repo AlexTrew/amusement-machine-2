@@ -7,7 +7,7 @@ spec:
   accessModes: ["ReadWriteOnce"]
   resources:
     requests:
-      storage: 100Mi
+      storage: 1Gi
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -30,12 +30,14 @@ spec:
     spec:
       hostNetwork: true # needed for IPv6 RAs and mDNS on the LAN
       dnsPolicy: ClusterFirstWithHostNet
+      securityContext:
+        fsGroup: 1000
       containers:
         - name: js-matter
           image: ghcr.io/matter-js/matterjs-server:stable
           imagePullPolicy: IfNotPresent
           securityContext:
-            privileged: true # radio access, ip6tables, sysctls
+            privileged: true
           args:
             - --production-mode
           env:
@@ -43,7 +45,7 @@ spec:
               value: "bond0"
           volumeMounts:
             - name: data
-              mountPath: /data/js-matter # Thread dataset/credentials survive restarts
+              mountPath: /data # Thread dataset/credentials survive restarts
           # readinessProbe:
           #   httpGet:
           #     path: /node
